@@ -1,0 +1,42 @@
+.seatContainer {
+  width: 80px;
+  height: 80px;
+  position: relative;
+}
+
+.seat {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #05bd8c;
+  border-radius: 10px 10px 15px 15px;
+  transform: perspective(300px) rotateX(40deg);
+  transition: transform ease 0.3s, top ease 0.1s;
+  top: 0;
+
+  &:not(.disabled),
+  &.admin {
+    cursor: pointer;
+
+    &:hover {
+      transform: perspective(300px) rotateX(50deg);
+    }
+  }
+}
+
+.seat:not(.disabled):active {
+  top: 5px;
+}
+
+.seat.disabled {
+  background-color: #999;
+}
+
+.seat.reserved {
+  background-color: #ef5a33;
+}
+
+.seat.selected {
+  background-color: #207af1;
+  transform: perspective(300px) rotateX(50deg);
+}
