@@ -25,15 +25,16 @@ export const ReserveSeat = ({
   });
   const { errors } = formState;
 
-  console.log("formState", formState, formState.isValid);
-
   return (
     <Modal>
       <form
         onSubmit={handleSubmit(async (values) => {
           const response = await submitReservation({ ...values, seats });
-          console.log("response", response);
-          onSuccess();
+          if (response.success) {
+            onSuccess();
+            return;
+          }
+          alert(response.message);
         })}
       >
         <div className="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">

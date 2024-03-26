@@ -1,6 +1,5 @@
-import { useSearchParams } from "next/navigation";
 import HomePage, { ReservationSeat } from "./HomePage";
-import { pool } from "./db";
+import { getReservations } from "./actions";
 
 export default async function Home({
   searchParams,
@@ -9,11 +8,11 @@ export default async function Home({
 }) {
   const isAdmin = searchParams.key === process.env.ADMIN_KEY;
 
-  const reservationsData = await pool.query("SELECT * FROM reservation;");
+  const reservationsData = await getReservations();
 
-  const reservations = reservationsData.rows.map((row) => ({
-    row: Number(row.seat_row),
-    seat: Number(row.seat_number),
+  const reservations = reservationsData.map((row) => ({
+    row: row.row,
+    seat: row.seat,
     ...(isAdmin
       ? { timestamp: row.timestamp, name: row.name, email: row.email }
       : {}),
